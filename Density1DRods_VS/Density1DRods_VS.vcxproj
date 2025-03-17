@@ -127,12 +127,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Lattice.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="THDQuantities.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Lattice.h" />
     <ClInclude Include="THDQuantities.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -18,17 +18,11 @@
     <ClCompile Include="main.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Lattice.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="THDQuantities.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Lattice.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="THDQuantities.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>

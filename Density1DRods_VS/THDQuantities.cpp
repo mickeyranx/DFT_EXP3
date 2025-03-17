@@ -1,10 +1,12 @@
 #include "THDQuantities.h"
-#include "Lattice.h"
 #include <cmath>
 #include <iostream>
 
 double THDQuantities::psizeroD(double x)
 {
+	if (x >= 1) {
+		x = 0.9999999;
+	}
 	return x + (1 - x) * log(1 - x);
 }
 
@@ -12,6 +14,9 @@ double THDQuantities::psizeroD(double x)
 
 double THDQuantities::psiZeroDPrime(double x)
 {
+	if (x >= 1) {
+		x = 0.9999999;
+	}
 	return -1*log(1-x);
 }
 
@@ -26,7 +31,7 @@ double THDQuantities::canonicalPot(std::vector<double> rho_s, std::vector<double
 	int V = wall_pos;
 	int L = rod_length;
 	double sum = 0;
-	//liefert erst ab V und bis M - V - L - 1 Beiträge
+	//provides values from V to M - V - L - 1 
 	for (int i = V; i < M - V - L + 3 ; i++)
 	{
 		//assign current rho
@@ -69,7 +74,6 @@ double THDQuantities::exactAdsorbtionOneDim(std::vector<double> rho_s, double rh
 
 double THDQuantities::weightedDensityOne(int L, int S, std::vector<double> &density_profile)
 {
-	//TODO: check boundary cond?
 	double rho_s = 0;
 	//sum over densities of L preceding lattice points
 	for (int i = S - (L - 1); i < S + 1; i++)
@@ -81,7 +85,6 @@ double THDQuantities::weightedDensityOne(int L, int S, std::vector<double> &dens
 
 double THDQuantities::weightedDensityZero(int L ,int S, std::vector<double> &density_profile)
 {
-	//TODO: check boundary cond?
 	double rho_s = 0;
 	//sum over densities of L-1 preceding lattice points
 	for (int i = S - (L - 1); i < S; i++)
@@ -97,9 +100,6 @@ double THDQuantities::weightedDensityZero(int L ,int S, std::vector<double> &den
 //maybe put muExS in different file
 double THDQuantities::muExS(int L, int S, std::vector<double> &density_profile)
 {
-
-	//sum
-	// !!! check boundaries !!!
 	double sum1 = 0;
 	for (int i = S; i < S + L; i++)
 	{
