@@ -32,13 +32,13 @@ double THDQuantities::canonicalPot(std::vector<double> rho_s, std::vector<double
 		//assign current rho
 		double rho = rho_s[i];
 		if(rho == 0){
-			sum += psizeroD(Lattice::weightedDensityOne(i, rho_s)) - psizeroD(Lattice::weightedDensityZero(i, rho_s));
+			sum += psizeroD(weightedDensityOne(L, i, rho_s)) - psizeroD(weightedDensityZero(L, i, rho_s));
 
 		}
 		else {
 			double a = rho * (log(rho) - 1)
-				+ psizeroD(Lattice::weightedDensityOne(i, rho_s))
-				- psizeroD(Lattice::weightedDensityZero(i, rho_s))
+				+ psizeroD(weightedDensityOne(L, i, rho_s))
+				- psizeroD(weightedDensityZero(L, i, rho_s))
 				- (mu) * rho;
 			
 			sum += a;
@@ -60,13 +60,60 @@ double THDQuantities::exactAdsorbtionOneDim(std::vector<double> rho_s, double rh
 	double sum = 0;
 	for (int i = wall_pos_1 + 1; i < wall_pos_2; i++)
 	{
-		//std::cout << "i = " << i << std::endl;
-		//std::cout << rho_s[i] << std::endl;
 		sum += rho_s[i] - rho_0;
 	}
 	return sum;
 }
 
+
+
+double THDQuantities::weightedDensityOne(int L, int S, std::vector<double> &density_profile)
+{
+	//TODO: check boundary cond?
+	double rho_s = 0;
+	//sum over densities of L preceding lattice points
+	for (int i = S - (L - 1); i < S + 1; i++)
+	{
+		rho_s += density_profile[i];
+	}
+	return rho_s;
+}
+
+double THDQuantities::weightedDensityZero(int L ,int S, std::vector<double> &density_profile)
+{
+	//TODO: check boundary cond?
+	double rho_s = 0;
+	//sum over densities of L-1 preceding lattice points
+	for (int i = S - (L - 1); i < S; i++)
+	{
+		rho_s += density_profile[i];
+	}
+
+	return rho_s;
+}
+
+
+
+//maybe put muExS in different file
+double THDQuantities::muExS(int L, int S, std::vector<double> &density_profile)
+{
+
+	//sum
+	// !!! check boundaries !!!
+	double sum1 = 0;
+	for (int i = S; i < S + L; i++)
+	{
+		sum1 += psiZeroDPrime(weightedDensityOne(L, i, density_profile));
+	}
+
+	double sum2 = 0;
+	for (int i = S + 1; i < S + L; i++)
+	{
+		sum2 += psiZeroDPrime(weightedDensityZero(L, i, density_profile));
+	}
+
+	return sum1 - sum2;
+}
 
 
 

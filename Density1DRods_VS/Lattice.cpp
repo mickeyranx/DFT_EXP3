@@ -95,6 +95,7 @@ void Lattice::setNextAlpha(double epsilon_new) {
             return;
         }
         else {
+            int x = 1;
             return;
         }
     }
@@ -142,6 +143,7 @@ std::vector<double> Lattice::calculateDensityProfile(int rod_length, double nu_0
 
     std::vector<double> rho = rho_0;
     std::vector<double> rho_prev = rho_0;
+    int count = 0;
     for (int i = 0; i < steps; i++)
     {
         //std::cout << "iteration = " << i << ", epsilion = " << epsilon_old << std::endl;
@@ -149,10 +151,9 @@ std::vector<double> Lattice::calculateDensityProfile(int rod_length, double nu_0
         if (epsilon_old <= pow(10, -9) && epsilon_old > 0) break;
         rho = iterate(rho_prev);
         rho_prev = rho;
+        count++;
     }
-
-    //check for adsorbtion 
-    //TODO: 
+    std::cout << "it: " << count << std::endl;
     //calculate pressure 
     double delta_mu = 0.001;
     double mu = log(rho_s_0) + mu_ex;
@@ -167,6 +168,9 @@ std::vector<double> Lattice::calculateDensityProfile(int rod_length, double nu_0
     std::cout << "omega_rho = " << omega_rho << std::endl;
     std::cout << "omega_rho_0 = " << omega_rho_0 << std::endl;
     std::cout << "gamma = " << (omega_rho - omega_rho_0)/2 << std::endl;
+
+
+    //TODO
     checkAdsorbtionCondition(rho, delta_mu);
 
 

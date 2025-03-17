@@ -25,7 +25,15 @@ public:
 	 //calculates the exakt Adsorbtion for a 1D lattice with Rods with determined density distribution rho_s a starting density rho_0 and the 2 positions of the barriers
 	 static double exactAdsorbtionOneDim(std::vector<double> rho_s, double rho_0, int wall_pos_1, int wall_pos_2);
 
+	 static double weightedDensityOne(int L, int S, std::vector<double>& density_profile);
+
+	 static double weightedDensityZero(int L, int S, std::vector<double>& density_profile);
+
+	 static double muExS(int L, int S, std::vector<double>& density_profile);
+
 	 
+
+
 };
 
 
